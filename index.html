@@ -19,7 +19,7 @@
         <span class="glyphicon glyphicon-thumbs-up"
           ng-click="incrementUpvotes(post)"></span>
         {{post.upvotes}}
-        <span class="posts">
+        <span style="font-size:20px; margin-left:10px;">
           <a ng-show="post.link" href="{{post.link}}">
             {{post.title}}
           </a>
@@ -27,9 +27,12 @@
             {{post.title}}
           </span>
         </span>
+        <span>
+          <a href="#/posts/{{$index}}">Comments</a>
+        </span>
       </div>
 
-      <form class="form-post" ng-submit="addPost()">
+      <form style="margin-top:30px;" ng-submit="addPost()">
         <h3>Add a new post</h3>
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
@@ -37,6 +40,27 @@
         </div>
         <button type="submit" class="btn btn-primary">Post</button>
       </form>
+    </script>
+    <script type="text/ng-template" id="/posts.html">
+      <div class="page-header">
+        <h3>
+          <a ng-show="post.link" href="{{post.link}}">
+            {{post.title}}
+          </a>
+          <span ng-hide="post.link">
+            {{post.title}}
+          </span>
+        </h3>
+      </div>
+
+      <div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
+        <span class="glyphicon glyphicon-thumbs-up"
+          ng-click="incrementUpvotes(comment)"></span>
+        {{comment.upvotes}} - by {{comment.author}}
+        <span style="font-size:20px; margin-left:10px;">
+          {{comment.body}}
+        </span>
+      </div>
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
     <script src="app.js"></script>
